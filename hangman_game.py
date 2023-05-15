@@ -19,7 +19,7 @@ class hangman_game:
         computer_choice=[]
 
         #used to add or append the letter of the computer word
-        for t in selected_word:
+        for index in selected_word:
             computer_choice.append("_")
 
         lives = 6
@@ -42,20 +42,25 @@ class hangman_game:
 
                     if(letter == player_letter):
                         computer_choice[postin] = letter
+                    
                         
             elif (player_letter not in computer_choice):
                 lives-=1
                 print("*******************************************************************************")
                 print(f"Letter is not in the computer word\nYou lost a life\nCurrent lives left {lives}")
+            
+            
+
 
             if "_" not in computer_choice:
                 print("*******************************************************************************")
-                print("Game over")
+                print(f"Congratulations you have won the game\nThe word you needed to guess was {selected_word}\n{stages[lives]}\nGAME OVER")
+        
                 end_of_game = True
 
             if lives == 0:
                 end_of_game = True
-                print(f"Game Over\nYou have {lives} lives left")
+                print(f"Game Over\n{stages[lives]}")
 
             
     def multiplayer():
@@ -69,8 +74,9 @@ class hangman_game:
         playe1_name = input(f"Player 1,enter your name =>")
         player2_name = input("Player 2, enter your name =>")
 
+        print(f"{playe1_name}, needs to enter 5\'FIVE\' words that will be guessed by {player2_name} ")
         while (amount_of_words <= 5 ):
-            player_1 = input(f"Enter a word that the player needs to guess {amount_of_words} =>").lower()
+            player_1 = input(f"Word {amount_of_words}. =>").lower()
 
             five_word.append(player_1)
             amount_of_words+=1
@@ -79,14 +85,16 @@ class hangman_game:
         selected_word = random.choice(five_word)
 
 
-        for x in selected_word:
+        for index in selected_word:
             words_to_be_guess.append("_")
 
         while(not end_of_game):
-            
+
+            print(f"{stages[lives]}\n{words_to_be_guess}\nYou have {lives} in this game mode")
             player_2_letter=input("Guess a letter =>").lower()
 
             if(player_2_letter in selected_word):
+                print("*******************************************************************************")
                 print(f"Congratulations you have guessed the correct letter which is {player_2_letter}")
 
                 for index in range(len(selected_word)):
@@ -94,15 +102,20 @@ class hangman_game:
 
                     if(letter == player_2_letter):
                         words_to_be_guess[index] = letter
-                print(words_to_be_guess)        
-
+                    
+                               
             elif(player_2_letter not in selected_word):
                 lives -=1
                 print("*******************************************************************************")
                 print(f"{stages[lives]}\nLetter is not in the computer word\n{stages[lives]}")
+
+            else:
+                print("Word and letter not found")
+
             
             if "_" not in words_to_be_guess:
-                print(f"{stages[lives]}\nCongratulations {playe1_name} you have won the game\n{player2_name} lost the game\nCurrent lives are {lives}")
+                print("******************************************************************************************")
+                print(f"Congratulations {playe1_name} you have won the game\n{player2_name} lost the game\nThe word you needed to guess was {selected_word}\nCurrent lives are {lives}\n{stages[lives]}")
                 end_of_game= True
                 
             
@@ -118,7 +131,7 @@ class hangman_game:
         print(f"Fill in the letter everywhere it appears on the appropriate dash (or dashes) each time the person guesses correctly. Circle the letter on the alphabet if is guessed correctly.\nAdd one body part to the drawing each time the letter chosen is not in the word. Begin by drawing a head attached to the short vertical line (the noose).\nAdd eyes, ears, nose, hair, body, legs, and arms. Put an X through the letter that was guessed and not correct. You may also wish to make your drawings very elaborate - one ear at a time, a neck, and a belly button\n- so that children will have a lot of guesses before losing. If the drawing of the person is completed before the word or words are guessed,\nthe guessing player loses. If the player figures out the word or words first, he or she wins.\nYou only have 6 lives to guess the word")
         sleep(5)
 
-        clear = input("Type 'NEXT' to exit the rules page").lower()
+        clear = input("Type 'NEXT' to exit the rules page =>").lower()
         
         if(clear == "next"):
             #used to clear the terminal window
